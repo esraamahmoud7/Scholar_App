@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "1054448196148",
+    "project_id": "chat-app-f3f09",
+    "storage_bucket": "chat-app-f3f09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054448196148:android:f79440a5c06ac5e0318861",
+        "android_client_info": {
+          "package_name": "com.example.scholar_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgGuEs5s7zhIYsimqNEUDtYh_A2D1w2aY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054448196148:android:99dfc3a6ea8dc2ac318861",
+        "android_client_info": {
+          "package_name": "com.example.scholar_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgGuEs5s7zhIYsimqNEUDtYh_A2D1w2aY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054448196148:android:f3fbdbb3285a4cfd318861",
+        "android_client_info": {
+          "package_name": "com.example.test_fire1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgGuEs5s7zhIYsimqNEUDtYh_A2D1w2aY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
