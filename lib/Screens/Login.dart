@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_app/Screens/Register.dart';
 import 'package:scholar_app/Screens/chatPage.dart';
+import 'package:scholar_app/cubits/LoginCubit/login_cubit.dart';
 import 'package:scholar_app/widgets/CustomButton.dart';
 
 import '../Constants.dart';
@@ -10,16 +12,11 @@ import '../helper/showSnakeBar.dart';
 import '../widgets/textField.dart';
 
 
-class SigninPage extends StatefulWidget {
+class SigninPage extends StatelessWidget {
   SigninPage({super.key});
 
   static String id = "LoginPage";
 
-  @override
-  State<SigninPage> createState() => _SigninPageState();
-}
-
-class _SigninPageState extends State<SigninPage> {
   String? Email,Password;
 
   bool isLoading=false;
@@ -29,6 +26,25 @@ class _SigninPageState extends State<SigninPage> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return BlocConsumer<LoginCubit, LoginState>(
+  listener: (context, state) {
+    if(state is LoginLoading)
+    {
+      isLoading= true;
+    }
+    else if(state is LoginSuccessfully)
+    {
+      showSnakeBar(context, "we miss you :').");
+      Navigator.pushNamed(context, chatPage.id,arguments: Email);
+      isLoading = false;
+    }
+    else if(state is LoginFailure)
+    {
+      showSnakeBar(context, state.message);
+      isLoading = false;
+    }
+  },
+  builder: (context, state) {
     return ModalProgressHUD(
       inAsyncCall:isLoading,
       child: Scaffold(
@@ -39,7 +55,7 @@ class _SigninPageState extends State<SigninPage> {
             key: formKey,
             child: ListView(
               children: [
-                SizedBox(height: 100,),
+                SizedBox(height: 150,),
                 Image.asset(Klogo,height: 130,),
                 Center(
                   child: Text(
@@ -75,28 +91,7 @@ class _SigninPageState extends State<SigninPage> {
                   child: CustomButton(text: "Sign In",OnTap: ()async
                   {
                     if (formKey.currentState!.validate()) {
-                      isLoading = true;
-                      setState(() {});
-                      try {
-                        await LoginUser();
-                        showSnakeBar(
-                            context, "we miss you :').");
-                        Navigator.pushNamed(context, chatPage.id,arguments: Email);
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
-                          showSnakeBar(context,
-                              'No user found for that email.');
-                        } else if (e.code == 'wrong-password') {
-                          showSnakeBar(context,
-                              'Wrong password provided for that user.');
-                        }
-                      }
-                      catch (e) {
-                        print(e);
-                        showSnakeBar(context, 'There was an error.');
-                      }
-                      isLoading = false;
-                      setState(() {});
+                        await BlocProvider.of<LoginCubit>(context).LoginUser(Email: Email!, Password: Password!);
                     }
                   }
                   )
@@ -112,22 +107,14 @@ class _SigninPageState extends State<SigninPage> {
                     )
                   ],
                 ),
-
-
               ],
             ),
           ),
         ),
 
       ),
-    );
+);
+  },
+);
   }
-
-
-
-    Future<void> LoginUser() async {
-      UserCredential userCredental = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: Email!, password: Password!);
-      print(userCredental.user!.displayName);
-    }
-  }
+}
