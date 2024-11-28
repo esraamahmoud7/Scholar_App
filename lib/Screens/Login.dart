@@ -8,6 +8,7 @@ import 'package:scholar_app/cubits/LoginCubit/login_cubit.dart';
 import 'package:scholar_app/widgets/CustomButton.dart';
 
 import '../Constants.dart';
+import '../cubits/ChatCubit/chat_cubit.dart';
 import '../helper/showSnakeBar.dart';
 import '../widgets/textField.dart';
 
@@ -36,6 +37,7 @@ class SigninPage extends StatelessWidget {
     {
       showSnakeBar(context, "we miss you :').");
       Navigator.pushNamed(context, chatPage.id,arguments: Email);
+      BlocProvider.of<ChatCubit>(context).ShowMessages();
       isLoading = false;
     }
     else if(state is LoginFailure)

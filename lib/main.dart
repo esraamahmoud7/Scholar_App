@@ -5,6 +5,7 @@ import 'package:scholar_app/Screens/chatPage.dart';
 import 'package:scholar_app/cubits/LoginCubit/login_cubit.dart';
 import 'Screens/Login.dart';
 import 'Screens/Register.dart';
+import 'cubits/ChatCubit/chat_cubit.dart';
 import 'cubits/RegisterCubit/register_cubit.dart';
 import 'firebase_options.dart';
 
@@ -25,8 +26,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LoginCubit()),
-        BlocProvider(create: (context)=>RegisterCubit())
-        
+        BlocProvider(create: (context)=> RegisterCubit()),
+        BlocProvider(create: (context)=> ChatCubit())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
