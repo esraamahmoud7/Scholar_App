@@ -1,15 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_app/Constants.dart';
-import 'package:scholar_app/cubits/RegisterCubit/register_cubit.dart';
-
+import 'package:scholar_app/cubits/AuthCubit/auth_cubit.dart';
 import '../helper/showSnakeBar.dart';
 import '../widgets/CustomButton.dart';
 import '../widgets/textField.dart';
-import 'Login.dart';
-import 'chatPage.dart';
 
 
 class RegisterPage extends StatelessWidget {
@@ -26,7 +22,7 @@ class RegisterPage extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthCubit, AuthState>(
   listener: (context, state) {
     if(state is RegisterLoading)
     {
@@ -92,7 +88,7 @@ class RegisterPage extends StatelessWidget {
                     OnTap: () async {
                       if (formKey.currentState!.validate())
                       {
-                        BlocProvider.of<RegisterCubit>(context).RegisterUser(Email: Email!, Password: Password!);
+                        BlocProvider.of<AuthCubit>(context).RegisterUser(Email: Email!, Password: Password!);
                       }
                     }
 

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scholar_app/Screens/chatPage.dart';
-import 'package:scholar_app/cubits/LoginCubit/login_cubit.dart';
+import 'package:scholar_app/cubits/AuthCubit/auth_cubit.dart';
+import 'Blocs/auth_bloc.dart';
 import 'Screens/Login.dart';
 import 'Screens/Register.dart';
+import 'SimpleBlocObserver.dart';
 import 'cubits/ChatCubit/chat_cubit.dart';
-import 'cubits/RegisterCubit/register_cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -14,6 +15,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Bloc.observer;
+  // Bloc.transformer;
+  // BlocOverrides.runZoned(() {
+  //   runApp(MyApp());
+  // },
+  //     blocObserver: SimpleBlocObserver()
+  // );
   runApp(MyApp());
 }
 
@@ -25,9 +33,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LoginCubit()),
-        BlocProvider(create: (context)=> RegisterCubit()),
-        BlocProvider(create: (context)=> ChatCubit())
+        BlocProvider(create: (context)=> ChatCubit()),
+        BlocProvider(create: (context)=>AuthCubit()),
+        BlocProvider(create: (context)=>AuthBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

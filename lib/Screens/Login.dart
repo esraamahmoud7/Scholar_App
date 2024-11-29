@@ -1,12 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:scholar_app/Blocs/auth_bloc.dart';
 import 'package:scholar_app/Screens/Register.dart';
 import 'package:scholar_app/Screens/chatPage.dart';
-import 'package:scholar_app/cubits/LoginCubit/login_cubit.dart';
+// import 'package:scholar_app/cubits/AuthCubit/auth_cubit.dart';
 import 'package:scholar_app/widgets/CustomButton.dart';
-
 import '../Constants.dart';
 import '../cubits/ChatCubit/chat_cubit.dart';
 import '../helper/showSnakeBar.dart';
@@ -27,7 +26,7 @@ class SigninPage extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
+    return BlocConsumer<AuthBloc, AuthState>(
   listener: (context, state) {
     if(state is LoginLoading)
     {
@@ -42,8 +41,8 @@ class SigninPage extends StatelessWidget {
     }
     else if(state is LoginFailure)
     {
-      showSnakeBar(context, state.message);
       isLoading = false;
+      showSnakeBar(context, state.message);
     }
   },
   builder: (context, state) {
@@ -90,10 +89,10 @@ class SigninPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: CustomButton(text: "Sign In",OnTap: ()async
+                  child: CustomButton(text: "Sign In",OnTap: ()
                   {
                     if (formKey.currentState!.validate()) {
-                        await BlocProvider.of<LoginCubit>(context).LoginUser(Email: Email!, Password: Password!);
+                      BlocProvider.of<AuthBloc>(context).add(LoginEvent(Email: Email!, Password: Password!));
                     }
                   }
                   )
